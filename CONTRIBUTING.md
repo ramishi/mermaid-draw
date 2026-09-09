@@ -44,11 +44,11 @@ See `AGENTS.md` for the full architecture reference including type definitions a
 
 ## Cutting a Release
 
-Releases are fully automated via GitHub Actions:
+Releases are automatic on push to `main`:
 
-1. Update `CHANGELOG.md` — move items from `[Unreleased]` to a new versioned section
-2. Go to **Actions → Release → Run workflow**
-3. Choose the bump type (patch / minor / major)
-4. The workflow will: bump `package.json`, commit + tag, publish to npm, create a GitHub Release
+1. Bump `version` in `package.json` (patch / minor / major per the table above)
+2. Update `CHANGELOG.md` — move items from `[Unreleased]` to a new `## [X.Y.Z] - YYYY-MM-DD` section
+3. Run `pnpm lint` and `pnpm build` locally before pushing
+4. Commit and push to `main`
 
-**Do not manually edit the version in `package.json`** — the release workflow handles this.
+CI then deploys to GitHub Pages, creates the `vX.Y.Z` tag, and publishes a GitHub Release automatically. Do not push tags manually — the CI `tag` job creates them. There is no npm publish.

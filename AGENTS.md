@@ -54,3 +54,23 @@ Recent history favors short, imperative commit subjects such as `Fix broken layo
 - call out test and lint results in the PR body
 
 Open an issue first for larger changes.
+
+## Release & Version Bump
+
+Version lives only in `package.json`; the top-bar display and CI derive from it. Semver: bug fix → `patch`, backwards-compatible feature → `minor`, breaking change → `major`.
+
+To cut a release:
+1. Run local checks: `pnpm lint`, `pnpm test`, `pnpm build`
+2. Bump `version` in `package.json` (never hand-edit `pnpm-lock.yaml` version fields)
+3. In `CHANGELOG.md`, move relevant items from `[Unreleased]` into a new `## [X.Y.Z] - YYYY-MM-DD` section
+4. Commit and push to `main`
+
+CI (`ci.yml`) then:
+- deploys the static export to GitHub Pages at `https://ramishi.github.io/mermaid-draw/`
+- runs the `tag` job: if `package.json` version ≠ latest git tag, creates `vX.Y.Z` tag + GitHub Release automatically
+
+Rules:
+- Do NOT push tags manually — the `tag` job creates them
+- There is NO npm publish — no `release.yml`, no `NPM_TOKEN`; do not reintroduce one
+- Nothing to do in repo settings: Pages uses `build_type: workflow`, already configured
+- Every push to `main` redeploys Pages, even without a version bump
