@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-09-09
+
 ### Added
 - FigJam-style toolbar redesign: shape tool palette with drag-to-draw mode, connector tool, selection tool
 - Inline diagram title editing in top bar — click to rename, persists to saved `.diagram.json` and used as the download filename
@@ -15,18 +17,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Auto-hide subgraph children in collapsed state
 - Default edge routing and animated edge settings persist across new connections
 - Export PNG, WebP, and PDF formats added alongside SVG
-
-### Changed
-- Empty state hint text corrected — removed inaccurate double-click instruction
-- Diagram name propagated through Save JSON and Download .mmd filenames
-- Layout engine defaults to ELK
-
-### Fixed
-- Diagram name and settings now restore correctly when opening a `.diagram.json` file
-
-## [0.1.0] - 2026-03-08
-
-### Added
 - 14 node shapes: rectangle, rounded, stadium, subroutine, cylinder, circle, double-circle, diamond, hexagon, parallelogram, parallelogram-alt, trapezoid, trapezoid-alt, asymmetric
 - 3 edge line styles (solid, dashed, thick) × 5 arrowhead types (arrow, none, bidirectional, circle, cross)
 - 4 flow directions: TD, LR, BT, RL — canvas re-layouts on change via Dagre
@@ -44,5 +34,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Inspector panel for node/edge properties
 - Toolbar with full keyboard accessibility (ARIA labels, focus management)
 - `npx mermaid-draw` terminal install — serves static build and opens browser
-- CI workflow: lint + audit + build on every push/PR
-- Release workflow: automated version bump, npm publish, GitHub Release
+- CI workflow: lint + test + audit + build on every push/PR, automatic GitHub Pages deployment, auto version tag + GitHub Release
+
+### Changed
+- Empty state hint text corrected — removed inaccurate double-click instruction
+- Diagram name propagated through Save JSON and Download .mmd filenames
+- Layout engine defaults to ELK
+
+### Fixed
+- Diagram name and settings now restore correctly when opening a `.diagram.json` file
