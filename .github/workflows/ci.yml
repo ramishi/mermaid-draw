@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+        with: { version: latest }
+      - uses: actions/setup-node@v7
+        with: { node-version: '24', cache: 'pnpm' }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm test
+      - run: pnpm audit --audit-level moderate
+        continue-on-error: true   # informational; flip to false to make blocking
+      - name: Build for GitHub Pages
+        run: pnpm build
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+      - name: Verify out/ exists
+        run: |
+          [ -d "out" ] || (echo "ERROR: out/ not created"; exit 1)
+          echo "Build OK"; ls out/ | head -10
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: out
+
+  deploy:
+    needs: ci
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+  tag:
+    needs: ci
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
+      - name: Check for new version
+        id: v
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          LATEST=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ "v${VERSION}" != "${LATEST}" ]; then
+            echo "new=true" >> "$GITHUB_OUTPUT"
+            echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          else
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Create tag and release
+        if: steps.v.outputs.new == 'true'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: v${{ steps.v.outputs.version }}
+          name: v${{ steps.v.outputs.version }}
+          generate_release_notes: true

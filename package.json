@@ -1,0 +1,68 @@
+{
+  "name": "mermaid-draw",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Visual drag-and-drop editor for Mermaid.js diagrams. Draw flowcharts on a canvas — export clean .mmd syntax.",
+  "keywords": [
+    "mermaid",
+    "diagram",
+    "flowchart",
+    "visual-editor",
+    "drag-and-drop",
+    "mermaid.js",
+    "react-flow"
+  ],
+  "license": "MIT",
+  "author": "Simon Law",
+  "homepage": "https://github.com/ramishi/mermaid-draw",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramishi/mermaid-draw.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ramishi/mermaid-draw/issues"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "mermaid-draw": "bin/cli.js"
+  },
+  "files": [
+    "out/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node bin/cli.js",
+    "test": "node --test lib/*.test.ts",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@dagrejs/dagre": "^2.0.4",
+    "@xyflow/react": "^12.10.1",
+    "elkjs": "^0.12.0",
+    "html-to-image": "^1.11.13",
+    "jspdf": "^4.2.1",
+    "mermaid": "^11.12.3",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "serve": "^14.2.6",
+    "zustand": "^5.0.11"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/dagre": "^0.7.53",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.1.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

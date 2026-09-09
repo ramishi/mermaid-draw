@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+:root {
+  /* FigJam flat design tokens */
+  --surface: #f7f8fa;
+  --surface-2: #ffffff;
+  --border: #d7dde5;
+  --text: #172033;
+  --muted: #667085;
+  --elevation: 0 2px 8px rgba(16, 24, 40, 0.08);
+  --accent: #4F46E5;
+  --canvas-bg: var(--surface);
+  --canvas-grid: var(--border);
+  --focus-ring: #2563eb;
+
+  /* Legacy aliases — removed in Phase 6 */
+  --neu-bg: var(--surface);
+  --neu-surface: var(--surface-2);
+  --neu-border: var(--border);
+  --neu-text: var(--text);
+  --neu-muted: var(--muted);
+  --neu-shadow-raised: var(--elevation);
+  --neu-shadow-inset: inset 0 0 0 1px #cbd5e1, inset 0 1px 2px rgba(16, 24, 40, 0.06);
+  --neu-shadow-concave: inset 0 0 0 1px #d7dde5, inset 0 2px 4px rgba(16, 24, 40, 0.04);
+  --neu-shadow-soft: var(--elevation);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--surface);
+  color: var(--text);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.elevated { box-shadow: var(--elevation); }
+.neu-raised { box-shadow: var(--elevation); }
+.neu-inset { box-shadow: var(--neu-shadow-inset); }
+.neu-concave { box-shadow: var(--neu-shadow-concave); }
+.neu-soft { box-shadow: var(--elevation); }
+
+/* Restore browser-default rich-text styles inside HTML-rendered node labels */
+.node-html-label a             { color: #4F46E5; text-decoration: underline; cursor: pointer; }
+.node-html-label a:hover       { color: #3730a3; }
+.node-html-label b,
+.node-html-label strong        { font-weight: 700; }
+.node-html-label i,
+.node-html-label em            { font-style: italic; }
+.node-html-label s,
+.node-html-label del           { text-decoration: line-through; }
+.node-html-label u             { text-decoration: underline; }
+.node-html-label code          { font-family: ui-monospace, monospace; font-size: 0.85em; background: rgba(0,0,0,0.06); padding: 0 3px; border-radius: 3px; }
+.node-html-label sup           { vertical-align: super; font-size: 0.75em; }
+.node-html-label sub           { vertical-align: sub;   font-size: 0.75em; }
+
+.flow-edge-animated {
+  stroke-dasharray: 8 6;
+  animation: flow-edge-dash 1.2s linear infinite;
+}
+
+@keyframes flow-edge-dash {
+  to { stroke-dashoffset: -28; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .inspector-panel {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: min(320px, 100vw) !important;
+    z-index: 30;
+  }
+
+  .react-flow__minimap {
+    display: none;
+  }
+}

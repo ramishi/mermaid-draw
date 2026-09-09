@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+
+# Production build
+build/
+dist/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# AI session notes and local tooling
+.Jules/
+.claude/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+.slim/deepwork/
+
+# Local UX research material (third-party site mirror — not for version control)
+reference/
